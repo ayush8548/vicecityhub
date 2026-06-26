@@ -1,0 +1,267 @@
+@import "tailwindcss";
+
+/* ===========================================================================
+   ViceCityHub — Vice City neon design system
+   =========================================================================== */
+
+@theme {
+  /* Core surfaces */
+  --color-night: #07060e;
+  --color-night-2: #0c0a18;
+  --color-night-3: #14112a;
+  --color-ink: #1c1838;
+
+  /* Neon accents */
+  --color-neon-pink: #ff2d95;
+  --color-neon-magenta: #ff3db5;
+  --color-neon-purple: #a855f7;
+  --color-neon-violet: #7c3aed;
+  --color-neon-cyan: #22d3ee;
+  --color-neon-aqua: #00f0ff;
+  --color-sunset: #ff6a3d;
+  --color-gold: #ffd166;
+
+  /* Text */
+  --color-foreground: #f4f1ff;
+  --color-muted: #b6aedb;
+  --color-faint: #6f6796;
+
+  --font-display: var(--font-display), "Arial Black", sans-serif;
+  --font-condensed: var(--font-condensed), "Arial Narrow", "Arial Black", sans-serif;
+  --font-sans: var(--font-sans), system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+
+  --radius-glass: 1.25rem;
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-pulse-glow: pulseGlow 3s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.5s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+:root {
+  --background: var(--color-night);
+  --foreground: var(--color-foreground);
+}
+
+* {
+  border-color: color-mix(in oklab, var(--color-neon-purple) 18%, transparent);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, color-mix(in oklab, var(--color-neon-purple) 22%, transparent), transparent 60%),
+    radial-gradient(1000px 600px at 0% 10%, color-mix(in oklab, var(--color-neon-pink) 16%, transparent), transparent 55%),
+    radial-gradient(900px 700px at 50% 120%, color-mix(in oklab, var(--color-neon-cyan) 14%, transparent), transparent 60%),
+    var(--color-night);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-neon-pink);
+  color: #07060e;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-night-2); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--color-neon-purple), var(--color-neon-pink));
+  border-radius: 99px;
+}
+
+/* ===========================================================================
+   Reusable component utilities
+   =========================================================================== */
+@layer components {
+  .glass {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklab, white 8%, transparent),
+      color-mix(in oklab, white 2%, transparent)
+    );
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid color-mix(in oklab, white 12%, transparent);
+    border-radius: var(--radius-glass);
+  }
+
+  .glass-strong {
+    background: color-mix(in oklab, var(--color-night-2) 72%, transparent);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid color-mix(in oklab, white 12%, transparent);
+  }
+
+  .neon-text {
+    background: linear-gradient(100deg, var(--color-neon-cyan), var(--color-neon-pink) 55%, var(--color-neon-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .neon-border-glow {
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--color-neon-pink) 40%, transparent),
+      0 0 24px -6px color-mix(in oklab, var(--color-neon-pink) 60%, transparent),
+      0 0 60px -20px color-mix(in oklab, var(--color-neon-purple) 70%, transparent);
+  }
+
+  .btn-neon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border-radius: 0.85rem;
+    color: #fff;
+    background: linear-gradient(100deg, var(--color-neon-pink), var(--color-neon-purple));
+    box-shadow: 0 10px 30px -10px color-mix(in oklab, var(--color-neon-pink) 80%, transparent);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  }
+  .btn-neon:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+    box-shadow: 0 18px 40px -12px color-mix(in oklab, var(--color-neon-pink) 90%, transparent);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: 0.85rem;
+    color: var(--color-foreground);
+    border: 1px solid color-mix(in oklab, var(--color-neon-cyan) 35%, transparent);
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .btn-ghost:hover {
+    background: color-mix(in oklab, var(--color-neon-cyan) 12%, transparent);
+    border-color: var(--color-neon-cyan);
+  }
+
+  .section-pad {
+    padding-inline: clamp(1rem, 5vw, 5rem);
+  }
+
+  .grid-noise {
+    background-image:
+      linear-gradient(color-mix(in oklab, var(--color-neon-purple) 8%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in oklab, var(--color-neon-purple) 8%, transparent) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .shimmer-line {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--color-neon-cyan) 60%, transparent),
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: var(--animate-shimmer);
+  }
+
+  /* Massive cinematic headline (Voltaic / Transcend reference look) */
+  .headline-xl {
+    font-family: var(--font-condensed);
+    font-weight: 400;
+    line-height: 0.84;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  /* Headline outline variant — punches through hero art like the references */
+  .headline-outline {
+    color: transparent;
+    -webkit-text-stroke: 2px color-mix(in oklab, var(--color-foreground) 70%, transparent);
+  }
+
+  .neon-text-strong {
+    background: linear-gradient(105deg, var(--color-neon-cyan), var(--color-neon-pink) 50%, var(--color-neon-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 24px color-mix(in oklab, var(--color-neon-pink) 45%, transparent));
+  }
+
+  /* AAA cinematic frame with corner brackets */
+  .cine-frame {
+    position: relative;
+    border: 1px solid color-mix(in oklab, var(--color-neon-purple) 28%, transparent);
+    border-radius: 1.5rem;
+  }
+  .cine-frame::before,
+  .cine-frame::after {
+    content: "";
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 2px solid var(--color-neon-cyan);
+    opacity: 0.8;
+  }
+  .cine-frame::before {
+    top: 14px;
+    left: 14px;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .cine-frame::after {
+    bottom: 14px;
+    right: 14px;
+    border-left: 0;
+    border-top: 0;
+  }
+
+  /* Angular clip for AAA cards/buttons */
+  .clip-angular {
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 92% 100%, 0 100%);
+  }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
