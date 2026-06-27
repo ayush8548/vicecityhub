@@ -3,6 +3,9 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { InteractiveMap } from "@/components/map/InteractiveMap";
 import { getLocations } from "@/lib/data";
 
+// Re-fetch from Supabase at most every 60s so admin edits appear in production.
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Interactive Map of Leonida",
   description:

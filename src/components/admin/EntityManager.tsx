@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Plus, Pencil, Trash2, X, Save } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Save, Upload, Loader2 } from "lucide-react";
 import { GradientArt } from "@/components/ui/GradientArt";
 import { VerificationBadge } from "@/components/ui/VerificationBadge";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
@@ -249,6 +249,7 @@ export function EntityManager({
                   <FieldInput
                     key={f.key}
                     def={f}
+                    table={table}
                     value={draft[f.key]}
                     onChange={(v) =>
                       setDraft((d) => (d ? { ...d, [f.key]: v } : d))
@@ -282,10 +283,12 @@ export function EntityManager({
 
 function FieldInput({
   def,
+  table,
   value,
   onChange,
 }: {
   def: FieldDef;
+  table: string;
   value: unknown;
   onChange: (v: unknown) => void;
 }) {
@@ -326,7 +329,7 @@ function FieldInput({
     <label className="block">
       <span className="mb-1 block text-xs font-semibold uppercase tracking-wide text-faint">
         {def.label}
-        {def.type === "images" && " (comma-separated seeds or URLs)"}
+        {def.type === "images" && " (upload from your computer, or paste a URL)"}
       </span>
       {def.type === "textarea" ? (
         <textarea
@@ -334,6 +337,12 @@ function FieldInput({
           value={String(value ?? "")}
           onChange={(e) => onChange(e.target.value)}
           className={base}
+        />
+      ) : def.type === "images" ? (
+        <ImagesField
+          value={String(value ?? "")}
+          onChange={(v) => onChange(v)}
+          table={table}
         />
       ) : def.type === "status" ? (
         <div className="flex flex-wrap gap-2">
@@ -364,6 +373,129 @@ function FieldInput({
         />
       )}
     </label>
+  );
+}
+
+// --- Image field with direct upload to Supabase Storage ------------------
+const STORAGE_BUCKET = "media";
+
+function ImagesField({
+  value,
+  onChange,
+  table,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  table: string;
+}) {
+  const [busy, setBusy] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const urls = value
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  async function handleFiles(files: FileList | null) {
+    if (!files || files.length === 0) return;
+    if (!isSupabaseConfigured) {
+      alert("Connect Supabase to upload images (add keys to .env.local).");
+      return;
+    }
+    setBusy(true);
+    try {
+      const supabase = createClient();
+      const added: string[] = [];
+      for (const file of Array.from(files)) {
+        const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+        const path = `${table}/${Date.now()}-${Math.random()
+          .toString(36)
+          .slice(2, 8)}.${ext}`;
+        const { error } = await supabase.storage
+          .from(STORAGE_BUCKET)
+          .upload(path, file, { contentType: file.type, upsert: false });
+        if (error) {
+          alert(`Upload failed: ${error.message}`);
+          continue;
+        }
+        const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path);
+        added.push(data.publicUrl);
+      }
+      if (added.length) {
+        // New uploads become the cover image (first), and we drop the
+        // auto-generated local placeholder paths that have no real file.
+        const kept = urls.filter(
+          (u) => !/^\/images\/(characters|vehicles|news|guides|locations)\//.test(u),
+        );
+        onChange([...added, ...kept].join(", "));
+      }
+    } finally {
+      setBusy(false);
+      if (inputRef.current) inputRef.current.value = "";
+    }
+  }
+
+  return (
+    <div className="space-y-3">
+      {/* manual entry still supported (paste a URL or gradient seed) */}
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="Upload below, or paste an image URL"
+        className="w-full rounded-xl border border-white/15 bg-night/60 px-3 py-2.5 text-sm outline-none transition focus:border-neon-cyan focus:ring-2 focus:ring-neon-cyan/30"
+      />
+
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          disabled={busy || !isSupabaseConfigured}
+          className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-neon-cyan/40 bg-neon-cyan/10 px-3 py-2 text-sm font-semibold text-neon-cyan transition hover:bg-neon-cyan/20 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {busy ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Upload className="h-4 w-4" />
+          )}
+          {busy ? "Uploading…" : "Upload from computer"}
+        </button>
+        {!isSupabaseConfigured && (
+          <span className="text-xs text-faint">
+            Connect Supabase to enable uploads
+          </span>
+        )}
+      </div>
+
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        multiple
+        className="hidden"
+        onChange={(e) => handleFiles(e.target.files)}
+      />
+
+      {urls.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {urls.map((u, i) => (
+            <span
+              key={`${u}-${i}`}
+              className="group/thumb relative h-16 w-24 overflow-hidden rounded-lg border border-white/10"
+            >
+              <GradientArt seed={u} label="preview" />
+              <button
+                type="button"
+                onClick={() => onChange(urls.filter((_, j) => j !== i).join(", "))}
+                aria-label="Remove image"
+                className="absolute right-1 top-1 grid h-5 w-5 cursor-pointer place-items-center rounded-full bg-night/80 text-muted opacity-0 transition hover:text-neon-pink group-hover/thumb:opacity-100"
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 

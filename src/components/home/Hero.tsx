@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, MapPin, Newspaper, ArrowUpRight, CalendarClock } from "lucide-react";
@@ -9,10 +10,23 @@ import { ArrowRight, MapPin, Newspaper, ArrowUpRight, CalendarClock } from "luci
 const RELEASE_ISO = "2026-11-19T00:00:00.000Z";
 const RELEASE_LABEL = "Nov 19, 2026";
 
-function daysUntilRelease(): number {
-  const ms = new Date(RELEASE_ISO).getTime() - Date.now();
-  return Math.max(0, Math.ceil(ms / 86_400_000));
+// Optional cinematic hero image. Drop a high-res, legally-clean file in
+// public/images/ and set this to e.g. "/images/hero.jpg" (1500px+ wide).
+// When null, the hero shows the editorial numbered nav rail instead.
+// If the file is missing/broken it gracefully falls back to the nav rail.
+const HERO_IMAGE: string | null = "/images/hero.jpg";
+
+type TimeLeft = { d: number; h: number; m: number; s: number };
+function timeUntilRelease(): TimeLeft {
+  const ms = Math.max(0, new Date(RELEASE_ISO).getTime() - Date.now());
+  return {
+    d: Math.floor(ms / 86_400_000),
+    h: Math.floor(ms / 3_600_000) % 24,
+    m: Math.floor(ms / 60_000) % 60,
+    s: Math.floor(ms / 1000) % 60,
+  };
 }
+const pad = (n: number) => String(n).padStart(2, "0");
 
 const STATS = [
   { label: "Confirmed characters", value: "8" },
@@ -29,11 +43,14 @@ const INDEX = [
 
 export function Hero() {
   const reduce = useReducedMotion();
-  // Countdown computed on the client to avoid hydration mismatch.
-  const [days, setDays] = useState<number | null>(null);
+  // Live countdown — ticks every second. Computed on the client to avoid
+  // hydration mismatch.
+  const [t, setT] = useState<TimeLeft | null>(null);
+  const [imgFailed, setImgFailed] = useState(false);
+  const showImage = Boolean(HERO_IMAGE) && !imgFailed;
   useEffect(() => {
-    setDays(daysUntilRelease());
-    const id = setInterval(() => setDays(daysUntilRelease()), 60 * 60 * 1000);
+    setT(timeUntilRelease());
+    const id = setInterval(() => setT(timeUntilRelease()), 1000);
     return () => clearInterval(id);
   }, []);
 
@@ -63,8 +80,10 @@ export function Hero() {
           <span className="inline-flex items-center gap-2 rounded-full border border-neon-pink/40 bg-neon-pink/10 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground">
             <CalendarClock className="h-3.5 w-3.5 text-neon-pink" />
             Launches {RELEASE_LABEL}
-            {days !== null && (
-              <span className="text-neon-cyan">· {days} days</span>
+            {t && (
+              <span className="text-neon-cyan tabular-nums">
+                · {t.d}d {pad(t.h)}:{pad(t.m)}:{pad(t.s)}
+              </span>
             )}
           </span>
         </motion.div>
@@ -106,35 +125,83 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* refined numbered navigation rail (replaces the illustration) */}
-          <motion.nav
-            {...rise(0.3)}
-            aria-label="Explore the hub"
-            className="lg:col-span-6 lg:border-l lg:border-white/10 lg:pl-12"
-          >
-            <ul className="divide-y divide-white/10">
-              {INDEX.map((it) => (
-                <li key={it.n}>
-                  <Link
-                    href={it.href}
-                    className="group flex items-center gap-5 py-4 transition"
-                  >
-                    <span className="font-condensed text-2xl leading-none text-faint transition group-hover:text-neon-pink sm:text-3xl">
-                      {it.n}
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block font-display text-lg font-bold leading-tight transition group-hover:text-neon-pink">
-                        {it.label}
+          {showImage ? (
+            /* cinematic hero image (drop a high-res file in public/images/) */
+            <motion.div
+              {...rise(0.3)}
+              className="lg:col-span-6"
+            >
+              <div className="relative h-[320px] overflow-hidden rounded-3xl border border-white/10 neon-border-glow sm:h-[440px] lg:h-[520px]">
+                <Image
+                  src={HERO_IMAGE!}
+                  alt="Vice City — Grand Theft Auto VI"
+                  onError={() => setImgFailed(true)}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/70 via-transparent to-night/20" />
+                <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/10" />
+              </div>
+            </motion.div>
+          ) : (
+            /* refined numbered navigation rail */
+            <motion.nav
+              {...rise(0.3)}
+              aria-label="Explore the hub"
+              className="lg:col-span-6 lg:border-l lg:border-white/10 lg:pl-12"
+            >
+              <ul className="divide-y divide-white/10">
+                {INDEX.map((it) => (
+                  <li key={it.n}>
+                    <Link
+                      href={it.href}
+                      className="group flex items-center gap-5 py-4 transition"
+                    >
+                      <span className="font-condensed text-2xl leading-none text-faint transition group-hover:text-neon-pink sm:text-3xl">
+                        {it.n}
                       </span>
-                      <span className="block text-sm text-faint">{it.desc}</span>
-                    </span>
-                    <ArrowUpRight className="h-5 w-5 shrink-0 text-faint transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-neon-cyan" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </motion.nav>
+                      <span className="min-w-0 flex-1">
+                        <span className="block font-display text-lg font-bold leading-tight transition group-hover:text-neon-pink">
+                          {it.label}
+                        </span>
+                        <span className="block text-sm text-faint">{it.desc}</span>
+                      </span>
+                      <ArrowUpRight className="h-5 w-5 shrink-0 text-faint transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-neon-cyan" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </motion.nav>
+          )}
         </div>
+
+        {/* when a hero image is shown, surface the index as a compact strip */}
+        {showImage && (
+          <motion.nav
+            {...rise(0.34)}
+            aria-label="Explore the hub"
+            className="mt-8 grid grid-cols-2 overflow-hidden rounded-2xl border border-white/10 md:grid-cols-4"
+          >
+            {INDEX.map((it, i) => (
+              <Link
+                key={it.n}
+                href={it.href}
+                className={`group flex items-center gap-3 border-white/10 p-4 transition hover:bg-white/5 ${
+                  i % 2 === 0 ? "border-r" : ""
+                } ${i < 2 ? "border-b md:border-b-0" : ""} ${i === 2 ? "md:border-r" : ""}`}
+              >
+                <span className="font-condensed text-xl leading-none text-faint transition group-hover:text-neon-pink">
+                  {it.n}
+                </span>
+                <span className="text-sm font-bold transition group-hover:text-neon-pink">
+                  {it.label}
+                </span>
+              </Link>
+            ))}
+          </motion.nav>
+        )}
 
         {/* bottom bento bar */}
         <motion.div
@@ -147,10 +214,10 @@ export function Hero() {
           >
             <div>
               <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-neon-cyan">
-                Days to launch
+                Countdown to launch
               </div>
-              <div className="mt-1 font-condensed text-3xl leading-none neon-text-strong">
-                {days !== null ? days : "—"}
+              <div className="mt-1 font-condensed text-2xl leading-none neon-text-strong tabular-nums sm:text-3xl">
+                {t ? `${t.d}d ${pad(t.h)}:${pad(t.m)}:${pad(t.s)}` : "—"}
               </div>
               <div className="mt-1 text-[10px] uppercase tracking-[0.18em] text-faint">
                 {RELEASE_LABEL}

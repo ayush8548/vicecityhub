@@ -3,6 +3,9 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { DatabaseGrid } from "@/components/database/DatabaseGrid";
 import { getVehicles } from "@/lib/data";
 
+// Re-fetch from Supabase at most every 60s so admin edits appear in production.
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "GTA 6 Vehicles Database",
   description:

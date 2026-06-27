@@ -33,7 +33,18 @@ function insertBlock(table, cols, fieldMap, rows, { conflict, wipe } = {}) {
     .map((r) => `  (${cols.map((c) => lit(r[fieldMap[c]])).join(", ")})`)
     .join(",\n");
   let stmt = `insert into ${table} (${colSql}) values\n${values}`;
-  if (conflict) stmt += `\non conflict (${conflict}) do nothing`;
+  if (conflict) {
+    // Upsert: re-running the seed refreshes every existing row (except the
+    // conflict key itself), so content/image edits propagate on re-run.
+    const updates = cols
+      .filter((c) => c !== conflict)
+      .map((c) => {
+        const col = c === "order" ? `"order"` : c;
+        return `${col} = excluded.${col}`;
+      })
+      .join(", ");
+    stmt += `\non conflict (${conflict}) do update set ${updates}`;
+  }
   lines.push(stmt + ";");
   return `-- ${table} (${rows.length})\n${lines.join("\n")}\n`;
 }

@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ArrowRight, Flame, Gauge } from "lucide-react";
 import { Hero } from "@/components/home/Hero";
 import { UpdatesCarousel } from "@/components/home/UpdatesCarousel";
+import { TrailersSection } from "@/components/home/TrailersSection";
+import { PreOrderSection } from "@/components/home/PreOrderSection";
 import { Newsletter } from "@/components/home/Newsletter";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -16,6 +18,9 @@ import {
   getVehicles,
   getCharacters,
 } from "@/lib/data";
+
+// Re-fetch from Supabase at most every 60s so admin edits appear in production.
+export const revalidate = 60;
 
 export default async function HomePage() {
   const [carousel, trending, guides, vehicles, characters] = await Promise.all([
@@ -34,6 +39,10 @@ export default async function HomePage() {
 
       <div className="space-y-24 pb-8">
         <UpdatesCarousel items={carousel} />
+
+        <TrailersSection />
+
+        <PreOrderSection />
 
         {/* Trending News */}
         <section className="section-pad mx-auto max-w-7xl">

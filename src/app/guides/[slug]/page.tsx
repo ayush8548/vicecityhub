@@ -19,6 +19,9 @@ export async function generateMetadata({
   return { title: g.title, description: g.description };
 }
 
+// Re-fetch from Supabase at most every 60s so admin edits appear in production.
+export const revalidate = 60;
+
 export default async function GuidePage({
   params,
 }: {
