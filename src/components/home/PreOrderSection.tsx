@@ -3,7 +3,7 @@ import { CalendarCheck, ShoppingCart } from "lucide-react";
 
 // Reported regional pricing — Standard / Ultimate editions. "—" = not yet listed.
 const PRICES = [
-  { region: "United States", standard: "$80", ultimate: "$100" },
+  { region: "United States", standard: "$79.99", ultimate: "$99.99" },
   { region: "United Kingdom", standard: "£69.99", ultimate: "£89.99" },
   { region: "Europe", standard: "€80", ultimate: "€100" },
   { region: "India", standard: "₹5,999", ultimate: "₹7,499" },
@@ -36,8 +36,13 @@ export function PreOrderSection() {
                 <span className="block neon-text-strong">Vice City</span>
               </h2>
               <p className="mt-4 max-w-md text-muted">
-                Secure your copy of Grand Theft Auto VI for PlayStation 5 and
-                Xbox Series X|S ahead of the November 19, 2026 launch.
+                Secure your copy of Grand Theft Auto VI for PlayStation 5, PS5
+                Pro, and Xbox Series X|S ahead of the November 19, 2026 launch.
+              </p>
+              <p className="mt-3 max-w-md text-sm text-neon-cyan">
+                Every pre-order includes the Vintage Vice City Pack — a &apos;55
+                Vapid Stanier, an Ocean Beach garage, and vintage outfits for
+                Jason &amp; Lucia.
               </p>
               <a
                 href={PREORDER_URL}

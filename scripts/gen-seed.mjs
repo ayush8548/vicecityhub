@@ -37,7 +37,8 @@ function insertBlock(table, cols, fieldMap, rows, { conflict, wipe } = {}) {
     // Upsert: re-running the seed refreshes every existing row (except the
     // conflict key itself), so content/image edits propagate on re-run.
     const updates = cols
-      .filter((c) => c !== conflict)
+      // Never overwrite `images` on re-run — preserves photos uploaded via /admin.
+      .filter((c) => c !== conflict && c !== "images")
       .map((c) => {
         const col = c === "order" ? `"order"` : c;
         return `${col} = excluded.${col}`;
