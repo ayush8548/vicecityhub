@@ -1,183 +1,168 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  MessageSquare,
-  Users,
-  TrendingUp,
-  Trophy,
-  ArrowRight,
-  Flame,
-} from "lucide-react";
+import { ShieldCheck, Map, Newspaper, Sparkles, MessagesSquare } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { VerificationBadge } from "@/components/ui/VerificationBadge";
+import { DiscordLogo } from "@/components/ui/SocialIcons";
 
 export const metadata: Metadata = {
   title: "Community",
   description:
-    "Join the ViceCityHub community — discussions, theory threads, and leaderboards.",
+    "Join the ViceCityHub community on Discord — verified updates, trailer theories, map cartography, and more.",
 };
 
-const STATS = [
-  { icon: Users, label: "Members", value: "48,210" },
-  { icon: MessageSquare, label: "Threads", value: "12,540" },
-  { icon: TrendingUp, label: "Daily posts", value: "3,180" },
-  { icon: Trophy, label: "Verified theories", value: "92" },
-];
+// ⬇️ Paste your Discord invite link here.
+const DISCORD_INVITE_URL = "https://discord.gg/bjw6mF2qa3";
+// Optional: enable the live widget in Discord → Server Settings → Widget,
+// then paste the Server ID here to show a live member list.
+const DISCORD_SERVER_ID = "";
 
-const THREADS = [
+const CHANNELS = [
   {
-    title: "Frame-by-frame: hidden license plates in the trailer",
-    author: "neonhunter",
-    replies: 412,
-    status: "trailer_inferred" as const,
-    tag: "Analysis",
+    icon: ShieldCheck,
+    name: "Verified Updates",
+    desc: "Confirmed GTA 6 news the moment it drops — no rumors mislabeled as fact.",
   },
   {
-    title: "Map size megathread — comparing coastlines",
-    author: "cartographer_lu",
-    replies: 988,
-    status: "speculation" as const,
-    tag: "Map",
+    icon: Sparkles,
+    name: "Trailer Theories",
+    desc: "Frame-by-frame breakdowns and the community's sharpest predictions.",
   },
   {
-    title: "Confirmed: dual protagonists — what we actually know",
-    author: "mod_team",
-    replies: 1503,
-    status: "confirmed" as const,
-    tag: "Story",
+    icon: Map,
+    name: "Map Cartography",
+    desc: "Piece together Leonida coastline by coastline with fellow explorers.",
   },
   {
-    title: "Radio wishlist: which genres define modern Vice City?",
-    author: "soundsystem",
-    replies: 276,
-    status: "speculation" as const,
-    tag: "Audio",
+    icon: Newspaper,
+    name: "Off-Topic Lounge",
+    desc: "Everything else Vice City — music, screenshots, and hype.",
   },
-];
-
-const LEADERS = [
-  { name: "neonhunter", points: 18420, badge: "Trailer Analyst" },
-  { name: "cartographer_lu", points: 16110, badge: "Mapmaker" },
-  { name: "vicehistorian", points: 14870, badge: "Lore Keeper" },
-  { name: "framecounter", points: 12030, badge: "Detail Sleuth" },
-  { name: "coastrunner", points: 9980, badge: "Explorer" },
 ];
 
 export default function CommunityPage() {
+  const widgetEnabled = DISCORD_SERVER_ID.length > 0;
+
   return (
     <>
       <PageHeader
         eyebrow="The Crew"
-        title="Community"
-        description="Where the most dedicated Vice City fans break down every frame, map every coastline, and separate signal from rumor."
+        title="Join the Community"
+        description="The most dedicated Vice City fans gather on our Discord — breaking down every frame, mapping every coastline, and separating signal from rumor."
       />
 
       <div className="section-pad mx-auto max-w-7xl space-y-16 py-12">
-        {/* stats */}
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {STATS.map((s, i) => (
-            <Reveal key={s.label} delay={i * 0.05}>
-              <div className="glass flex flex-col items-center p-6 text-center">
-                <s.icon className="h-6 w-6 text-neon-pink" />
-                <div className="mt-3 font-display text-2xl font-black neon-text">
-                  {s.value}
-                </div>
-                <div className="text-xs uppercase tracking-wide text-faint">
-                  {s.label}
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        {/* Discord hero */}
+        <Reveal>
+          <div className="glass-strong relative overflow-hidden rounded-3xl p-8 sm:p-12">
+            <div className="pointer-events-none absolute inset-0 grid-noise opacity-10" />
+            <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-neon-purple/25 blur-[130px]" />
 
-        <div className="grid gap-8 lg:grid-cols-[1.6fr_1fr]">
-          {/* threads */}
-          <div>
-            <SectionHeading
-              eyebrow="Hot right now"
-              title="Trending Discussions"
-            />
-            <div className="space-y-3">
-              {THREADS.map((t, i) => (
-                <Reveal key={t.title} delay={i * 0.05}>
-                  <div className="glass flex items-center justify-between gap-4 p-5 transition hover:neon-border-glow">
+            <div className="relative grid gap-10 lg:grid-cols-2 lg:items-center">
+              <div>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-neon-cyan">
+                  <MessagesSquare className="h-3.5 w-3.5" />
+                  Live community
+                </span>
+                <h2 className="mt-5 headline-xl text-[clamp(2.5rem,6vw,4.5rem)]">
+                  On the
+                  <span className="block neon-text-strong">Discord</span>
+                </h2>
+                <p className="mt-4 max-w-md text-muted">
+                  Real-time discussion, theory threads, exclusive drops, and
+                  events. It&apos;s free, it&apos;s where the fans are, and it&apos;s the
+                  fastest way into the conversation.
+                </p>
+                <a
+                  href={DISCORD_INVITE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-neon mt-7"
+                >
+                  <DiscordLogo className="h-5 w-5" />
+                  Join the Discord
+                </a>
+              </div>
+
+              {/* live widget if configured, else a branded panel */}
+              <div className="overflow-hidden rounded-2xl border border-white/10">
+                {widgetEnabled ? (
+                  <iframe
+                    title="ViceCityHub Discord"
+                    src={`https://discord.com/widget?id=${DISCORD_SERVER_ID}&theme=dark`}
+                    width="100%"
+                    height="400"
+                    allowTransparency
+                    frameBorder="0"
+                    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+                  />
+                ) : (
+                  <div className="grid h-full min-h-[260px] place-items-center bg-night/50 p-10 text-center">
                     <div>
-                      <div className="mb-2 flex items-center gap-2">
-                        <span className="rounded-full bg-neon-purple/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-neon-purple">
-                          {t.tag}
-                        </span>
-                        <VerificationBadge status={t.status} size="sm" />
-                      </div>
-                      <h3 className="font-display font-bold leading-snug">
-                        {t.title}
-                      </h3>
-                      <p className="mt-1 text-xs text-faint">
-                        started by @{t.author}
+                      <span className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br from-neon-purple to-neon-pink text-white">
+                        <DiscordLogo className="h-8 w-8" />
+                      </span>
+                      <p className="mt-4 font-display text-lg font-bold">
+                        Your server, your crew
+                      </p>
+                      <p className="mt-1 text-sm text-faint">
+                        Enable the Discord widget to show a live member list here.
                       </p>
                     </div>
-                    <div className="flex shrink-0 flex-col items-center text-neon-cyan">
-                      <Flame className="h-4 w-4" />
-                      <span className="font-display text-lg font-black">
-                        {t.replies}
-                      </span>
-                      <span className="text-[10px] uppercase text-faint">
-                        replies
-                      </span>
-                    </div>
                   </div>
-                </Reveal>
-              ))}
+                )}
+              </div>
             </div>
           </div>
+        </Reveal>
 
-          {/* leaderboard */}
-          <div>
-            <SectionHeading eyebrow="Top contributors" title="Leaderboard" />
-            <div className="glass p-4">
-              {LEADERS.map((l, i) => (
-                <div
-                  key={l.name}
-                  className="flex items-center gap-3 border-b border-white/5 py-3 last:border-0"
-                >
-                  <span
-                    className={`grid h-8 w-8 place-items-center rounded-lg font-display text-sm font-black ${
-                      i === 0
-                        ? "bg-gradient-to-br from-gold to-neon-pink text-night"
-                        : "bg-white/5 text-muted"
-                    }`}
-                  >
-                    {i + 1}
+        {/* what's inside */}
+        <div>
+          <Reveal>
+            <SectionHeading
+              eyebrow="Inside the server"
+              title="What you'll find"
+            />
+          </Reveal>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {CHANNELS.map((c, i) => (
+              <Reveal key={c.name} delay={i * 0.06}>
+                <div className="glass flex items-start gap-4 p-5 transition hover:neon-border-glow">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-neon-pink/15 text-neon-pink">
+                    <c.icon className="h-5 w-5" />
                   </span>
-                  <div className="flex-1">
-                    <div className="font-semibold">@{l.name}</div>
-                    <div className="text-[11px] text-faint">{l.badge}</div>
-                  </div>
-                  <div className="font-display text-sm font-bold text-neon-cyan">
-                    {l.points.toLocaleString()}
+                  <div>
+                    <h3 className="font-display font-bold">{c.name}</h3>
+                    <p className="mt-1 text-sm text-muted">{c.desc}</p>
                   </div>
                 </div>
-              ))}
-            </div>
+              </Reveal>
+            ))}
           </div>
         </div>
 
-        {/* join CTA */}
+        {/* secondary CTA */}
         <Reveal>
-          <div className="glass-strong relative overflow-hidden rounded-3xl p-10 text-center sm:p-14">
-            <div className="pointer-events-none absolute inset-0 grid-noise opacity-10" />
-            <h2 className="relative font-display text-3xl font-black tracking-tight sm:text-4xl">
-              Bring your <span className="neon-text">theories</span>
+          <div className="glass relative overflow-hidden rounded-3xl p-10 text-center">
+            <h2 className="font-display text-2xl font-black tracking-tight sm:text-3xl">
+              Got a lead worth <span className="neon-text">verifying?</span>
             </h2>
-            <p className="relative mx-auto mt-3 max-w-lg text-muted">
-              Sign up to post, vote, and earn verification badges. The best
-              analysts get featured on the homepage.
+            <p className="mx-auto mt-3 max-w-lg text-muted">
+              Bring it to the Discord. The community digs in, and the strongest
+              findings make it onto the hub — tagged Confirmed, Trailer Inferred,
+              or Speculation.
             </p>
-            <div className="relative mt-7 flex flex-wrap justify-center gap-3">
-              <Link href="/admin" className="btn-neon">
-                Get Started <ArrowRight className="h-4 w-4" />
-              </Link>
+            <div className="mt-7 flex flex-wrap justify-center gap-3">
+              <a
+                href={DISCORD_INVITE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-neon"
+              >
+                <DiscordLogo className="h-5 w-5" />
+                Join the Discord
+              </a>
               <Link href="/news" className="btn-ghost">
                 Read the latest
               </Link>

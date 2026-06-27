@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Gamepad2 } from "lucide-react";
-import { XLogo, YoutubeLogo, TwitchLogo, GithubLogo } from "@/components/ui/SocialIcons";
+import { XLogo, YoutubeLogo, TwitchLogo, GithubLogo, DiscordLogo } from "@/components/ui/SocialIcons";
 
 const SOCIALS = [
+  { Icon: DiscordLogo, label: "Discord", href: "https://discord.gg/bjw6mF2qa3" },
   { Icon: XLogo, label: "X (Twitter)", href: "#" },
   { Icon: YoutubeLogo, label: "YouTube", href: "#" },
   { Icon: TwitchLogo, label: "Twitch", href: "#" },
