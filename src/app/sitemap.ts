@@ -6,8 +6,7 @@ import {
   getCharacters,
   getLocations,
 } from "@/lib/data";
-
-const BASE = "https://vicecityhub.com";
+import { SITE_URL as BASE } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [news, guides, vehicles, characters, locations] = await Promise.all([
