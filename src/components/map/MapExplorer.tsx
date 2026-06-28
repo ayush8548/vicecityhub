@@ -34,7 +34,7 @@ export function MapExplorer({ locations }: { locations: Location[] }) {
 
   const [query, setQuery] = useState("");
   const [activeTypes, setActiveTypes] = useState<Set<string>>(new Set());
-  const [activeId, setActiveId] = useState<string | null>(pinned[0]?.id ?? null);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
