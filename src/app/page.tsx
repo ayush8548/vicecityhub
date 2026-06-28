@@ -37,7 +37,7 @@ export default async function HomePage() {
     <>
       <Hero />
 
-      <div className="space-y-24 pb-8">
+      <div className="space-y-24 pb-8 lg:space-y-32">
         <UpdatesCarousel items={carousel} />
 
         <TrailersSection />
