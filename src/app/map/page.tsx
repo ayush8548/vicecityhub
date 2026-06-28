@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { InteractiveMap } from "@/components/map/InteractiveMap";
+import { MapExplorer } from "@/components/map/MapExplorer";
 import { getLocations } from "@/lib/data";
 
 // Re-fetch from Supabase at most every 60s so admin edits appear in production.
@@ -23,7 +23,7 @@ export default async function MapPage() {
         description="Tap a pin to explore Leonida. Colors reflect how solid each location's verification is — cyan confirmed, purple trailer-inferred, pink speculation."
       />
       <div className="section-pad mx-auto max-w-7xl py-12">
-        <InteractiveMap locations={locations} />
+        <MapExplorer locations={locations} />
       </div>
     </>
   );

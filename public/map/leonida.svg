@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <defs>
+    <radialGradient id="water" cx="50%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#0c2236"/>
+      <stop offset="55%" stop-color="#081826"/>
+      <stop offset="100%" stop-color="#05101a"/>
+    </radialGradient>
+    <linearGradient id="land" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#18203a"/>
+      <stop offset="55%" stop-color="#141a30"/>
+      <stop offset="100%" stop-color="#10152a"/>
+    </linearGradient>
+    <linearGradient id="coast" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#ff2d95"/>
+    </linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
+  </defs>
+
+  <!-- water -->
+  <rect width="1000" height="1000" fill="url(#water)"/>
+
+  <!-- lat / long grid -->
+  <g stroke="#2a3b52" stroke-width="0.6" opacity="0.4">
+    <path d="M0 125H1000M0 250H1000M0 375H1000M0 500H1000M0 625H1000M0 750H1000M0 875H1000"/>
+    <path d="M125 0V1000M250 0V1000M375 0V1000M500 0V1000M625 0V1000M750 0V1000M875 0V1000"/>
+  </g>
+
+  <!-- coastline glow -->
+  <g filter="url(#soft)" opacity="0.5">
+    <path d="M70 210 Q300 150 560 200 Q700 235 690 360 Q760 430 700 560 Q690 690 640 770 Q600 900 520 880 Q470 860 470 800 Q380 820 360 720 Q250 700 250 560 Q150 520 150 400 Q70 330 70 210 Z"
+      fill="none" stroke="url(#coast)" stroke-width="10"/>
+  </g>
+
+  <!-- main landmass (Leonida ~ Florida) -->
+  <path d="M70 210 Q300 150 560 200 Q700 235 690 360 Q760 430 700 560 Q690 690 640 770 Q600 900 520 880 Q470 860 470 800 Q380 820 360 720 Q250 700 250 560 Q150 520 150 400 Q70 330 70 210 Z"
+    fill="url(#land)" stroke="#3a2a55" stroke-width="2"/>
+
+  <!-- Grassrivers wetlands (south interior) -->
+  <g opacity="0.5">
+    <ellipse cx="460" cy="760" rx="120" ry="95" fill="#14331f"/>
+    <g stroke="#1f5233" stroke-width="2" fill="none" opacity="0.7">
+      <path d="M380 740 Q460 720 540 760"/>
+      <path d="M370 775 Q460 760 545 790"/>
+      <path d="M390 805 Q460 800 530 815"/>
+    </g>
+  </g>
+
+  <!-- Mount Kalaga highlands (north-central) -->
+  <g opacity="0.55" stroke="#4a3a2a" stroke-width="2" fill="none">
+    <path d="M470 290 Q520 250 575 295"/>
+    <path d="M485 310 Q520 285 560 312"/>
+    <path d="M455 330 Q520 300 590 332"/>
+  </g>
+
+  <!-- Vice City urban grid (south-east) -->
+  <g opacity="0.5" stroke="#3b4a66" stroke-width="1.5">
+    <path d="M590 630H700M590 655H700M590 680H700M590 705H700"/>
+    <path d="M610 615V720M635 615V720M660 615V720M685 615V720"/>
+  </g>
+
+  <!-- highways -->
+  <g stroke="#5a4a2a" stroke-width="3" fill="none" opacity="0.65" stroke-linecap="round">
+    <path d="M230 270 Q360 380 410 480 Q470 560 470 680 Q500 760 600 690"/>
+    <path d="M520 305 Q480 420 430 480"/>
+    <path d="M470 700 Q540 780 575 870"/>
+  </g>
+
+  <!-- Leonida Keys (island chain, far south) -->
+  <g fill="url(#land)" stroke="#3a2a55" stroke-width="1.5">
+    <ellipse cx="540" cy="905" rx="20" ry="9"/>
+    <ellipse cx="575" cy="918" rx="16" ry="8"/>
+    <ellipse cx="606" cy="928" rx="13" ry="7"/>
+    <ellipse cx="632" cy="936" rx="10" ry="6"/>
+  </g>
+
+  <!-- compass -->
+  <g transform="translate(905 95)" opacity="0.6">
+    <circle r="34" fill="none" stroke="#2a3b52" stroke-width="1.5"/>
+    <path d="M0 -28 L7 0 L0 28 L-7 0 Z" fill="#ff2d95"/>
+    <text x="0" y="-40" text-anchor="middle" fill="#b6aedb" font-family="Arial" font-size="16" font-weight="bold">N</text>
+  </g>
+</svg>
