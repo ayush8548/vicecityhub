@@ -4,7 +4,8 @@ import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Search, MapPin, Layers, ArrowRight, Loader2 } from "lucide-react";
-import { VERIFICATION, type Location } from "@/lib/types";
+import { type Location } from "@/lib/types";
+import { regionColor } from "@/lib/regionColors";
 import { cn } from "@/lib/utils";
 
 const LeonidaMap = dynamic(() => import("./LeonidaMap"), {
@@ -15,12 +16,6 @@ const LeonidaMap = dynamic(() => import("./LeonidaMap"), {
     </div>
   ),
 });
-
-const TONE_DOT: Record<string, string> = {
-  cyan: "bg-neon-cyan",
-  purple: "bg-neon-purple",
-  pink: "bg-neon-pink",
-};
 
 export function MapExplorer({ locations }: { locations: Location[] }) {
   const pinned = useMemo(
@@ -78,17 +73,25 @@ export function MapExplorer({ locations }: { locations: Location[] }) {
           <div className="flex flex-wrap gap-2">
             {types.map((t) => {
               const on = activeTypes.size === 0 || activeTypes.has(t);
+              const color = regionColor(t);
               return (
                 <button
                   key={t}
                   onClick={() => toggleType(t)}
-                  className={cn(
-                    "cursor-pointer rounded-full border px-3 py-1.5 text-xs font-semibold transition",
+                  style={
                     on
-                      ? "border-neon-pink bg-neon-pink/15 text-neon-pink"
-                      : "border-white/15 text-muted hover:text-foreground",
+                      ? { borderColor: color, color, background: `${color}1f` }
+                      : undefined
+                  }
+                  className={cn(
+                    "flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition",
+                    !on && "border-white/15 text-muted hover:text-foreground",
                   )}
                 >
+                  <span
+                    className="h-2 w-2 rounded-full"
+                    style={{ background: color }}
+                  />
                   {t}
                 </button>
               );
@@ -115,10 +118,8 @@ export function MapExplorer({ locations }: { locations: Location[] }) {
               >
                 <span className="flex items-center gap-2">
                   <span
-                    className={cn(
-                      "h-2 w-2 rounded-full",
-                      TONE_DOT[VERIFICATION[l.status].tone],
-                    )}
+                    className="h-2 w-2 rounded-full"
+                    style={{ background: regionColor(l.type) }}
                   />
                   {l.title}
                 </span>

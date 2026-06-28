@@ -2,9 +2,10 @@
 
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import { VERIFICATION, type Location } from "@/lib/types";
+import { Fragment, useEffect, useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup, Tooltip, Circle, useMap } from "react-leaflet";
+import { type Location } from "@/lib/types";
+import { regionColor, regionRadius } from "@/lib/regionColors";
 
 // Leonida is modeled on Florida, so we render real Florida geography. Regions
 // are pinned at their real-world equivalents. Basemaps are free + attributed.
@@ -52,14 +53,7 @@ function geoFor(l: Location): [number, number] {
   return GEO[l.slug] ?? fallbackLatLng(l.coordinates!.x, l.coordinates!.y);
 }
 
-const TONE_HEX: Record<string, string> = {
-  cyan: "#22d3ee",
-  purple: "#a855f7",
-  pink: "#ff2d95",
-};
-
-function markerIcon(tone: string, active: boolean): L.DivIcon {
-  const c = TONE_HEX[tone] ?? "#ff2d95";
+function markerIcon(c: string, active: boolean): L.DivIcon {
   const size = active ? 26 : 20;
   return L.divIcon({
     className: "vch-pin-wrap",
@@ -128,25 +122,49 @@ export default function LeonidaMap({
           subdomains={basemap === "dark" ? "abcd" : "abc"}
           maxZoom={tiles.maxZoom}
         />
-        {pinned.map((l) => (
-          <Marker
-            key={l.id}
-            position={geoFor(l)}
-            icon={markerIcon(VERIFICATION[l.status].tone, l.id === activeId)}
-            eventHandlers={{ click: () => onSelect(l.id) }}
-          >
-            <Popup>
-              <div className="vch-popup">
-                <div className="vch-popup__eyebrow">{l.type}</div>
-                <div className="vch-popup__title">{l.title}</div>
-                <p className="vch-popup__desc">{l.description}</p>
-                <a className="vch-popup__link" href={`/locations/${l.slug}`}>
-                  View location →
-                </a>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+        {pinned.map((l) => {
+          const color = regionColor(l.type);
+          const pos = geoFor(l);
+          const isActive = l.id === activeId;
+          return (
+            <Fragment key={l.id}>
+              {/* region boundary / zone outline */}
+              <Circle
+                center={pos}
+                radius={regionRadius(l.type)}
+                pathOptions={{
+                  color,
+                  weight: isActive ? 2.5 : 1.5,
+                  opacity: 0.85,
+                  fillColor: color,
+                  fillOpacity: isActive ? 0.2 : 0.1,
+                  dashArray: "5 7",
+                }}
+                eventHandlers={{ click: () => onSelect(l.id) }}
+              />
+              <Marker
+                position={pos}
+                icon={markerIcon(color, isActive)}
+                eventHandlers={{ click: () => onSelect(l.id) }}
+              >
+                {/* always-on label */}
+                <Tooltip permanent direction="top" offset={[0, -12]} className="vch-label">
+                  {l.title}
+                </Tooltip>
+                <Popup>
+                  <div className="vch-popup">
+                    <div className="vch-popup__eyebrow">{l.type}</div>
+                    <div className="vch-popup__title">{l.title}</div>
+                    <p className="vch-popup__desc">{l.description}</p>
+                    <a className="vch-popup__link" href={`/locations/${l.slug}`}>
+                      View location →
+                    </a>
+                  </div>
+                </Popup>
+              </Marker>
+            </Fragment>
+          );
+        })}
         <MapController active={active} />
       </MapContainer>
     </div>
