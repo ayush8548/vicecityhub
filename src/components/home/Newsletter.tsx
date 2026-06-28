@@ -18,8 +18,8 @@ export function Newsletter() {
             <span className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-neon-cyan">
               <Mail className="h-3.5 w-3.5" /> Newsletter
             </span>
-            <h2 className="mt-4 font-display text-3xl font-black tracking-tight sm:text-4xl">
-              Never miss a <span className="neon-text">verified</span> drop
+            <h2 className="mt-4 headline-xl text-[clamp(2rem,4vw,3.25rem)]">
+              Never miss a <span className="neon-text-strong">verified</span> drop
             </h2>
             <p className="mt-3 max-w-md text-sm text-muted sm:text-base">
               Get confirmed GTA 6 news, database updates, and map discoveries

@@ -45,7 +45,7 @@ export function EntityCard({
         </h3>
         <p className="mt-1.5 line-clamp-2 text-sm text-muted">{description}</p>
         {meta && (
-          <span className="mt-3 text-xs font-medium uppercase tracking-wide text-faint">
+          <span className="mt-auto pt-4 text-xs font-medium uppercase tracking-wide text-faint">
             {meta}
           </span>
         )}

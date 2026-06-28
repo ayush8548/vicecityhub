@@ -223,8 +223,8 @@ export default async function HomePage() {
           <Reveal>
             <div className="glass-strong relative overflow-hidden rounded-3xl p-10 text-center sm:p-16">
               <div className="pointer-events-none absolute inset-0 grid-noise opacity-10" />
-              <h2 className="relative font-display text-3xl font-black tracking-tight sm:text-5xl">
-                Explore every inch of <span className="neon-text">Leonida</span>
+              <h2 className="relative headline-xl text-[clamp(2.25rem,5vw,4rem)]">
+                Explore every inch of <span className="neon-text-strong">Leonida</span>
               </h2>
               <p className="relative mx-auto mt-4 max-w-xl text-muted">
                 Dive into the interactive map, browse the databases, and join a
