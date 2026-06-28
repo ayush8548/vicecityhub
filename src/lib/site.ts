@@ -2,7 +2,7 @@
 // robots, and structured data). Override via NEXT_PUBLIC_SITE_URL in Vercel when
 // you move to a custom domain — no code change needed.
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://vicecityhub.vercel.app"
+  process.env.NEXT_PUBLIC_SITE_URL || "https://vicecityhub.net"
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "ViceCityHub";
