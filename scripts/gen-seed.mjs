@@ -25,10 +25,17 @@ function lit(v) {
 }
 const sq = (s) => `'${s.replace(/'/g, "''")}'`;
 
-function insertBlock(table, cols, fieldMap, rows, { conflict, wipe } = {}) {
+function insertBlock(table, cols, fieldMap, rows, { conflict, wipe, sync } = {}) {
   const colSql = cols.map((c) => (c === "order" ? `"order"` : c)).join(", ");
   const lines = [];
   if (wipe) lines.push(`delete from ${table};`);
+  // sync: remove rows whose key isn't in the canonical set (keeps the table
+  // exactly in sync with the seed). Images on surviving rows are preserved by
+  // the upsert below.
+  if (sync && conflict) {
+    const keys = rows.map((r) => lit(r[fieldMap[conflict]])).join(", ");
+    lines.push(`delete from ${table} where ${conflict} not in (${keys});`);
+  }
   const values = rows
     .map((r) => `  (${cols.map((c) => lit(r[fieldMap[c]])).join(", ")})`)
     .join(",\n");
@@ -72,7 +79,7 @@ const out = [
   "",
   insertBlock("news", Object.keys(newsMap), newsMap, NEWS, { conflict: "slug" }),
   insertBlock("guides", Object.keys(guidesMap), guidesMap, GUIDES, { conflict: "slug" }),
-  insertBlock("vehicles", Object.keys(vehiclesMap), vehiclesMap, VEHICLES, { conflict: "slug" }),
+  insertBlock("vehicles", Object.keys(vehiclesMap), vehiclesMap, VEHICLES, { conflict: "slug", sync: true }),
   insertBlock("characters", Object.keys(charsMap), charsMap, CHARACTERS, { conflict: "slug" }),
   insertBlock("locations", Object.keys(locsMap), locsMap, LOCATIONS, { conflict: "slug" }),
   insertBlock("carousel_items", Object.keys(carMap), carMap, CAROUSEL, { wipe: true }),
