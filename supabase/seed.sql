@@ -4,7 +4,7 @@
 -- Safe to re-run: content tables upsert by slug; carousel is rebuilt.
 -- ===========================================================================
 
--- news (8)
+-- news (11)
 insert into news (slug, title, description, body, excerpt, category, author, images, status, read_minutes, trending, created_at, updated_at) values
   ('gta-6-release-date-november-19-2026', 'GTA 6 Confirmed for November 19, 2026', 'Rockstar Games confirms Grand Theft Auto VI will launch on November 19, 2026, after moving from its earlier spring target.', 'Rockstar Games has confirmed that Grand Theft Auto VI will release on November 19, 2026 for PlayStation 5 and Xbox Series X|S. The date follows an earlier window of May 26, 2026 that was announced alongside the second trailer.
 
@@ -39,7 +39,18 @@ Rockstar developers have teased cutting-edge tech including ray tracing, ray-tra
 
 Two editions are available: the Standard Edition at $79.99 and the Ultimate Edition at $99.99, which adds premium vehicles, weapons, apparel, and story content woven across the game. There is no Special or Collector''s Edition.
 
-Every pre-order includes the Vintage Vice City Pack — a ''55 Vapid Stanier, an Ocean Beach garage, and vintage outfits for Jason and Lucia. The game launches November 19, 2026 on PS5, PS5 Pro, and Xbox Series X|S; physical copies (a code in a box) hit retail from November 12 to support pre-loading.', 'Standard ($79.99) and Ultimate ($99.99) editions, plus a Vintage Vice City Pack for all pre-orders — no Collector''s Edition this time.', 'Release', 'Editorial Desk', ARRAY['news-preorder']::text[], 'confirmed', 4, true, '2026-06-25T00:00:00.000Z', '2026-06-25T00:00:00.000Z')
+Every pre-order includes the Vintage Vice City Pack — a ''55 Vapid Stanier, an Ocean Beach garage, and vintage outfits for Jason and Lucia. The game launches November 19, 2026 on PS5, PS5 Pro, and Xbox Series X|S; physical copies (a code in a box) hit retail from November 12 to support pre-loading.', 'Standard ($79.99) and Ultimate ($99.99) editions, plus a Vintage Vice City Pack for all pre-orders — no Collector''s Edition this time.', 'Release', 'Editorial Desk', ARRAY['news-preorder']::text[], 'confirmed', 4, true, '2026-06-25T00:00:00.000Z', '2026-06-25T00:00:00.000Z'),
+  ('gta-6-plays-best-on-ps5-sony', 'Sony Says GTA 6 ''Plays Best on PS5''', 'Sony is touting PS5-specific perks for GTA 6 — DualSense haptics, 3D audio, and ultra-fast load times.', 'Posts circulating from the community point to Sony promoting PlayStation 5 as the best way to play Grand Theft Auto VI, reportedly via a PlayStation Blog post.
+
+The highlighted perks include the DualSense controller''s haptic feedback and integrated speaker, Tempest 3D AudioTech to ''surround yourself in the distinct soundscapes of Leonida,'' and near-instant load times thanks to the PS5''s ultra-high-speed SSD.
+
+It''s worth noting these are platform-marketing points, and it isn''t yet clear how much the experience will actually differ from the Xbox Series X|S version. Rockstar has not detailed platform-specific features itself.', 'DualSense haptic feedback, Tempest 3D AudioTech, and near-instant SSD load times headline Sony''s GTA 6 pitch — though how much differs from Xbox is unclear.', 'Platforms', 'Platforms Desk', ARRAY['news-ps5']::text[], 'speculation', 4, true, '2026-06-28T00:00:00.000Z', '2026-06-28T00:00:00.000Z'),
+  ('gta-6-map-size-comparison', 'How Big Is GTA 6''s Map? ~4x Larger Than GTA V', 'Community estimates put Leonida at roughly 125 km²+ — about four times the size of GTA V''s map.', 'Map-size comparisons making the rounds estimate Grand Theft Auto VI''s state of Leonida at roughly 125 km² or more — about four times the size of GTA V''s ~81 km² map, and far larger than San Andreas (~36 km²) or the original Vice City (~16 km²).
+
+These figures are estimates based on in-game data, developer leaks, and community analysis, not official numbers. Rockstar has only said Leonida is the largest and most detailed world it has built. Treat exact sizes as unconfirmed until launch.', 'Based on leaks and community analysis, GTA 6''s Leonida is estimated at ~125 km²+, dwarfing GTA V (~81 km²) and every previous entry.', 'World', 'Map Team', ARRAY['news-mapsize']::text[], 'speculation', 3, true, '2026-06-28T00:00:00.000Z', '2026-06-28T00:00:00.000Z'),
+  ('vice-city-stanier-returns', 'Vice City''s Iconic Stanier Returns in GTA 6', 'The classic Vapid Stanier sedan makes its comeback — and you can get a vintage ''55 model free with pre-orders.', 'The Vapid Stanier — a Grand Theft Auto staple since the original Vice City era — is making its return in GTA 6.
+
+A vintage ''55 Vapid Stanier is confirmed as part of the Vintage Vice City Pack included with every pre-order, alongside an Ocean Beach garage. It''s the first GTA 6 vehicle Rockstar has named, and a nod to longtime fans of the series'' Miami-inspired roots.', 'A staple since the original Vice City, the Stanier returns in GTA 6, with a vintage ''55 Vapid Stanier bundled into the pre-order Vintage Vice City Pack.', 'Vehicles', 'Garage', ARRAY['news-stanier']::text[], 'confirmed', 3, false, '2026-06-28T00:00:00.000Z', '2026-06-28T00:00:00.000Z')
 on conflict (slug) do update set title = excluded.title, description = excluded.description, body = excluded.body, excerpt = excluded.excerpt, category = excluded.category, author = excluded.author, status = excluded.status, read_minutes = excluded.read_minutes, trending = excluded.trending, created_at = excluded.created_at, updated_at = excluded.updated_at;
 
 -- guides (6)

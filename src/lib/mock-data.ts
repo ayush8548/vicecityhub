@@ -175,6 +175,60 @@ export const NEWS: NewsArticle[] = [
     createdAt: iso("2026-06-25"),
     updatedAt: iso("2026-06-25"),
   },
+  {
+    id: "n9",
+    slug: "gta-6-plays-best-on-ps5-sony",
+    title: "Sony Says GTA 6 'Plays Best on PS5'",
+    description:
+      "Sony is touting PS5-specific perks for GTA 6 — DualSense haptics, 3D audio, and ultra-fast load times.",
+    excerpt:
+      "DualSense haptic feedback, Tempest 3D AudioTech, and near-instant SSD load times headline Sony's GTA 6 pitch — though how much differs from Xbox is unclear.",
+    body: "Posts circulating from the community point to Sony promoting PlayStation 5 as the best way to play Grand Theft Auto VI, reportedly via a PlayStation Blog post.\n\nThe highlighted perks include the DualSense controller's haptic feedback and integrated speaker, Tempest 3D AudioTech to 'surround yourself in the distinct soundscapes of Leonida,' and near-instant load times thanks to the PS5's ultra-high-speed SSD.\n\nIt's worth noting these are platform-marketing points, and it isn't yet clear how much the experience will actually differ from the Xbox Series X|S version. Rockstar has not detailed platform-specific features itself.",
+    category: "Platforms",
+    author: "Platforms Desk",
+    images: ["news-ps5"],
+    status: "speculation",
+    readMinutes: 4,
+    trending: true,
+    createdAt: iso("2026-06-28"),
+    updatedAt: iso("2026-06-28"),
+  },
+  {
+    id: "n10",
+    slug: "gta-6-map-size-comparison",
+    title: "How Big Is GTA 6's Map? ~4x Larger Than GTA V",
+    description:
+      "Community estimates put Leonida at roughly 125 km²+ — about four times the size of GTA V's map.",
+    excerpt:
+      "Based on leaks and community analysis, GTA 6's Leonida is estimated at ~125 km²+, dwarfing GTA V (~81 km²) and every previous entry.",
+    body: "Map-size comparisons making the rounds estimate Grand Theft Auto VI's state of Leonida at roughly 125 km² or more — about four times the size of GTA V's ~81 km² map, and far larger than San Andreas (~36 km²) or the original Vice City (~16 km²).\n\nThese figures are estimates based on in-game data, developer leaks, and community analysis, not official numbers. Rockstar has only said Leonida is the largest and most detailed world it has built. Treat exact sizes as unconfirmed until launch.",
+    category: "World",
+    author: "Map Team",
+    images: ["news-mapsize"],
+    status: "speculation",
+    readMinutes: 3,
+    trending: true,
+    createdAt: iso("2026-06-28"),
+    updatedAt: iso("2026-06-28"),
+  },
+  {
+    id: "n11",
+    slug: "vice-city-stanier-returns",
+    title: "Vice City's Iconic Stanier Returns in GTA 6",
+    description:
+      "The classic Vapid Stanier sedan makes its comeback — and you can get a vintage '55 model free with pre-orders.",
+    excerpt:
+      "A staple since the original Vice City, the Stanier returns in GTA 6, with a vintage '55 Vapid Stanier bundled into the pre-order Vintage Vice City Pack.",
+    body: "The Vapid Stanier — a Grand Theft Auto staple since the original Vice City era — is making its return in GTA 6.\n\nA vintage '55 Vapid Stanier is confirmed as part of the Vintage Vice City Pack included with every pre-order, alongside an Ocean Beach garage. It's the first GTA 6 vehicle Rockstar has named, and a nod to longtime fans of the series' Miami-inspired roots.",
+    category: "Vehicles",
+    author: "Garage",
+    images: ["news-stanier"],
+    status: "confirmed",
+    readMinutes: 3,
+    trending: false,
+    createdAt: iso("2026-06-28"),
+    updatedAt: iso("2026-06-28"),
+  },
 ];
 
 // ===========================================================================
