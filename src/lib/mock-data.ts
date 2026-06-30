@@ -229,6 +229,24 @@ export const NEWS: NewsArticle[] = [
     createdAt: iso("2026-06-28"),
     updatedAt: iso("2026-06-28"),
   },
+  {
+    id: "n12",
+    slug: "gta-6-preorders-smash-records",
+    title: "GTA 6 Pre-Orders Smash Records",
+    description:
+      "Reports point to 39 million+ copies and over $3 billion in GTA 6 pre-orders — with PS5 reportedly leading Xbox.",
+    excerpt:
+      "Insiders report 39M+ copies and $3B+ in pre-order revenue months before launch; Amazon sold out of PS5 copies and Xbox disputes the PS5-dominance claims.",
+    body: "Early reports suggest Grand Theft Auto VI is breaking pre-order records. Industry insiders cited by multiple outlets claim more than 39 million copies have been pre-ordered worldwide, generating over $3 billion in revenue — months before the game even launches.\n\nPlayStation 5 appears to be leading: affiliate-tracking data suggested PS5 outselling Xbox by as much as 6-to-1 (some reports said 8-to-1), and Amazon temporarily sold out of PS5 copies. Microsoft pushed back — an Xbox spokesperson said those figures reflect affiliate-link clicks rather than actual purchases, and that Xbox had 'record orders' of its own.\n\nNeither Sony, Microsoft, nor Take-Two has released official pre-order numbers, so exact platform splits remain unconfirmed until after the November 19, 2026 launch. Take-Two stock also dipped amid investor questions over the game's higher price point.",
+    category: "Sales",
+    author: "Editorial Desk",
+    images: ["news-preorder-records"],
+    status: "speculation",
+    readMinutes: 4,
+    trending: true,
+    createdAt: iso("2026-06-29"),
+    updatedAt: iso("2026-06-29"),
+  },
 ];
 
 // ===========================================================================

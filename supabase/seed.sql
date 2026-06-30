@@ -4,7 +4,7 @@
 -- Safe to re-run: content tables upsert by slug; carousel is rebuilt.
 -- ===========================================================================
 
--- news (11)
+-- news (12)
 insert into news (slug, title, description, body, excerpt, category, author, images, status, read_minutes, trending, created_at, updated_at) values
   ('gta-6-release-date-november-19-2026', 'GTA 6 Confirmed for November 19, 2026', 'Rockstar Games confirms Grand Theft Auto VI will launch on November 19, 2026, after moving from its earlier spring target.', 'Rockstar Games has confirmed that Grand Theft Auto VI will release on November 19, 2026 for PlayStation 5 and Xbox Series X|S. The date follows an earlier window of May 26, 2026 that was announced alongside the second trailer.
 
@@ -50,7 +50,12 @@ It''s worth noting these are platform-marketing points, and it isn''t yet clear 
 These figures are estimates based on in-game data, developer leaks, and community analysis, not official numbers. Rockstar has only said Leonida is the largest and most detailed world it has built. Treat exact sizes as unconfirmed until launch.', 'Based on leaks and community analysis, GTA 6''s Leonida is estimated at ~125 km²+, dwarfing GTA V (~81 km²) and every previous entry.', 'World', 'Map Team', ARRAY['news-mapsize']::text[], 'speculation', 3, true, '2026-06-28T00:00:00.000Z', '2026-06-28T00:00:00.000Z'),
   ('vice-city-stanier-returns', 'Vice City''s Iconic Stanier Returns in GTA 6', 'The classic Vapid Stanier sedan makes its comeback — and you can get a vintage ''55 model free with pre-orders.', 'The Vapid Stanier — a Grand Theft Auto staple since the original Vice City era — is making its return in GTA 6.
 
-A vintage ''55 Vapid Stanier is confirmed as part of the Vintage Vice City Pack included with every pre-order, alongside an Ocean Beach garage. It''s the first GTA 6 vehicle Rockstar has named, and a nod to longtime fans of the series'' Miami-inspired roots.', 'A staple since the original Vice City, the Stanier returns in GTA 6, with a vintage ''55 Vapid Stanier bundled into the pre-order Vintage Vice City Pack.', 'Vehicles', 'Garage', ARRAY['news-stanier']::text[], 'confirmed', 3, false, '2026-06-28T00:00:00.000Z', '2026-06-28T00:00:00.000Z')
+A vintage ''55 Vapid Stanier is confirmed as part of the Vintage Vice City Pack included with every pre-order, alongside an Ocean Beach garage. It''s the first GTA 6 vehicle Rockstar has named, and a nod to longtime fans of the series'' Miami-inspired roots.', 'A staple since the original Vice City, the Stanier returns in GTA 6, with a vintage ''55 Vapid Stanier bundled into the pre-order Vintage Vice City Pack.', 'Vehicles', 'Garage', ARRAY['news-stanier']::text[], 'confirmed', 3, false, '2026-06-28T00:00:00.000Z', '2026-06-28T00:00:00.000Z'),
+  ('gta-6-preorders-smash-records', 'GTA 6 Pre-Orders Smash Records', 'Reports point to 39 million+ copies and over $3 billion in GTA 6 pre-orders — with PS5 reportedly leading Xbox.', 'Early reports suggest Grand Theft Auto VI is breaking pre-order records. Industry insiders cited by multiple outlets claim more than 39 million copies have been pre-ordered worldwide, generating over $3 billion in revenue — months before the game even launches.
+
+PlayStation 5 appears to be leading: affiliate-tracking data suggested PS5 outselling Xbox by as much as 6-to-1 (some reports said 8-to-1), and Amazon temporarily sold out of PS5 copies. Microsoft pushed back — an Xbox spokesperson said those figures reflect affiliate-link clicks rather than actual purchases, and that Xbox had ''record orders'' of its own.
+
+Neither Sony, Microsoft, nor Take-Two has released official pre-order numbers, so exact platform splits remain unconfirmed until after the November 19, 2026 launch. Take-Two stock also dipped amid investor questions over the game''s higher price point.', 'Insiders report 39M+ copies and $3B+ in pre-order revenue months before launch; Amazon sold out of PS5 copies and Xbox disputes the PS5-dominance claims.', 'Sales', 'Editorial Desk', ARRAY['news-preorder-records']::text[], 'speculation', 4, true, '2026-06-29T00:00:00.000Z', '2026-06-29T00:00:00.000Z')
 on conflict (slug) do update set title = excluded.title, description = excluded.description, body = excluded.body, excerpt = excluded.excerpt, category = excluded.category, author = excluded.author, status = excluded.status, read_minutes = excluded.read_minutes, trending = excluded.trending, created_at = excluded.created_at, updated_at = excluded.updated_at;
 
 -- guides (6)
