@@ -247,6 +247,24 @@ export const NEWS: NewsArticle[] = [
     createdAt: iso("2026-06-29"),
     updatedAt: iso("2026-06-29"),
   },
+  {
+    id: "n13",
+    slug: "gta-6-soundtrack-v-rock-leaks",
+    title: "GTA 6 Soundtrack: V-Rock Returns as New Tracks Leak",
+    description:
+      "Trailers confirmed a retro song lineup and the return of V-Rock — and now artists are leaking their own GTA 6 contributions.",
+    excerpt:
+      "Six trailer-confirmed songs and V-Rock's return are joined by leaked claims from Panama and Neon Indian about tracks they've made for GTA 6.",
+    body: "Music is heating up as GTA 6's launch nears. So far, six songs have appeared in official trailers — tracks from Tom Petty, The Pointer Sisters, Wang Chung, Tammy Wynette, Zenglen, and Jay Ferguson — and the classic V-Rock radio station looks set to return, after Jason was spotted wearing a V-Rock shirt in promotional footage.\n\nBeyond the official drops, artists have started hinting at their own involvement. Panama reportedly said (in a since-deleted post) that a song called 'Back to Life,' written with Poolside, will feature in GTA 6, and Neon Indian — who appeared in GTA 5 — teased further work with Rockstar.\n\nThese artist claims are unconfirmed leaks, not official announcements. Rockstar is expected to reveal more songs and radio stations gradually ahead of the November 19, 2026 launch.",
+    category: "Music",
+    author: "Audio Desk",
+    images: ["news-soundtrack"],
+    status: "trailer_inferred",
+    readMinutes: 4,
+    trending: true,
+    createdAt: iso("2026-06-29"),
+    updatedAt: iso("2026-06-29"),
+  },
 ];
 
 // ===========================================================================

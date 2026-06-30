@@ -4,7 +4,7 @@
 -- Safe to re-run: content tables upsert by slug; carousel is rebuilt.
 -- ===========================================================================
 
--- news (12)
+-- news (13)
 insert into news (slug, title, description, body, excerpt, category, author, images, status, read_minutes, trending, created_at, updated_at) values
   ('gta-6-release-date-november-19-2026', 'GTA 6 Confirmed for November 19, 2026', 'Rockstar Games confirms Grand Theft Auto VI will launch on November 19, 2026, after moving from its earlier spring target.', 'Rockstar Games has confirmed that Grand Theft Auto VI will release on November 19, 2026 for PlayStation 5 and Xbox Series X|S. The date follows an earlier window of May 26, 2026 that was announced alongside the second trailer.
 
@@ -55,7 +55,12 @@ A vintage ''55 Vapid Stanier is confirmed as part of the Vintage Vice City Pack 
 
 PlayStation 5 appears to be leading: affiliate-tracking data suggested PS5 outselling Xbox by as much as 6-to-1 (some reports said 8-to-1), and Amazon temporarily sold out of PS5 copies. Microsoft pushed back — an Xbox spokesperson said those figures reflect affiliate-link clicks rather than actual purchases, and that Xbox had ''record orders'' of its own.
 
-Neither Sony, Microsoft, nor Take-Two has released official pre-order numbers, so exact platform splits remain unconfirmed until after the November 19, 2026 launch. Take-Two stock also dipped amid investor questions over the game''s higher price point.', 'Insiders report 39M+ copies and $3B+ in pre-order revenue months before launch; Amazon sold out of PS5 copies and Xbox disputes the PS5-dominance claims.', 'Sales', 'Editorial Desk', ARRAY['news-preorder-records']::text[], 'speculation', 4, true, '2026-06-29T00:00:00.000Z', '2026-06-29T00:00:00.000Z')
+Neither Sony, Microsoft, nor Take-Two has released official pre-order numbers, so exact platform splits remain unconfirmed until after the November 19, 2026 launch. Take-Two stock also dipped amid investor questions over the game''s higher price point.', 'Insiders report 39M+ copies and $3B+ in pre-order revenue months before launch; Amazon sold out of PS5 copies and Xbox disputes the PS5-dominance claims.', 'Sales', 'Editorial Desk', ARRAY['news-preorder-records']::text[], 'speculation', 4, true, '2026-06-29T00:00:00.000Z', '2026-06-29T00:00:00.000Z'),
+  ('gta-6-soundtrack-v-rock-leaks', 'GTA 6 Soundtrack: V-Rock Returns as New Tracks Leak', 'Trailers confirmed a retro song lineup and the return of V-Rock — and now artists are leaking their own GTA 6 contributions.', 'Music is heating up as GTA 6''s launch nears. So far, six songs have appeared in official trailers — tracks from Tom Petty, The Pointer Sisters, Wang Chung, Tammy Wynette, Zenglen, and Jay Ferguson — and the classic V-Rock radio station looks set to return, after Jason was spotted wearing a V-Rock shirt in promotional footage.
+
+Beyond the official drops, artists have started hinting at their own involvement. Panama reportedly said (in a since-deleted post) that a song called ''Back to Life,'' written with Poolside, will feature in GTA 6, and Neon Indian — who appeared in GTA 5 — teased further work with Rockstar.
+
+These artist claims are unconfirmed leaks, not official announcements. Rockstar is expected to reveal more songs and radio stations gradually ahead of the November 19, 2026 launch.', 'Six trailer-confirmed songs and V-Rock''s return are joined by leaked claims from Panama and Neon Indian about tracks they''ve made for GTA 6.', 'Music', 'Audio Desk', ARRAY['news-soundtrack']::text[], 'trailer_inferred', 4, true, '2026-06-29T00:00:00.000Z', '2026-06-29T00:00:00.000Z')
 on conflict (slug) do update set title = excluded.title, description = excluded.description, body = excluded.body, excerpt = excluded.excerpt, category = excluded.category, author = excluded.author, status = excluded.status, read_minutes = excluded.read_minutes, trending = excluded.trending, created_at = excluded.created_at, updated_at = excluded.updated_at;
 
 -- guides (6)
